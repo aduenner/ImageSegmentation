@@ -1,4 +1,7 @@
-Data/
+#No folders to be kept in data
+!Data/
+Data/*
+
 # PYTHON STUFF BELOW
 # Byte-compiled / optimized / DLL files
 __pycache__/
