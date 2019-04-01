@@ -15,3 +15,4 @@ See [RunUnet2D.ipynb](https://github.com/aduenner/ImageSegmentation/blob/master/
    - Visualize principal components
    - **Generate "fake" images** based on principal components calculated from real images**
 
+See [3D_Visualization](https://github.com/aduenner/ImageSegmentation/blob/master/3d_visualization.ipynb) for working with a sliced dataset (WIP)
