@@ -15,7 +15,7 @@ def getData(model_params, local_dir):
     IMG_WIDTH = model_params['image_width']
     IMG_CHANNELS = model_params['input_channels']
 
-    directory = local_dir+"Data/NucleusData/"
+    directory = local_dir+"/Data/"
     zipfilepath = directory+"data-science-bowl-2018.zip"
     print("Loking for file " + zipfilepath)
 

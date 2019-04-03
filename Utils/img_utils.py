@@ -19,8 +19,9 @@ def generate_subimages(img_path, sub_size, overlap):
     if input_image.shape[2]>1:
         input_image = rgb2gray(input_image)
         
-    #Scale image and convert to uint8
-    input_image = ((input_image-input_image.min())*255//input_image.max()).astype(np.uint8)
+    # Scale image and convert to uint8
+    # input_image = ((input_image-input_image.min())*255//input_image.max()).astype(np.uint8)
+    input_image = ((input_image*255)//1).astype(np.uint8)
     print(input_image.shape)
     width, height = input_image.shape
 
