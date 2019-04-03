@@ -2,7 +2,7 @@
 SEM_Image 
 
 ## Image Size:
-Original size
+Original size (but later resized to 1024x1024)
 
 ## Masked Regions:
  - Nucleus (green)
