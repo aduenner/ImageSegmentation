@@ -1,0 +1,11 @@
+function data = load_images(data)
+image_data.id = strtok(imdata.mturk_filename, '_');
+image_data.image_fn = strcat('Training/Raw_Images_1024/', ...
+                                 image_data.id, ...
+                                 '.png');
+image_data.image = imread(image_data.image_fn);
+image_data.mask_filepath = strcat(masks_directory, ...
+                            image_data.mturk_filename);
+image_data.mask = imread(image_data.mask_filepath);
+                           
+end
