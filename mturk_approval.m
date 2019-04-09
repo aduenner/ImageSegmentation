@@ -2,7 +2,7 @@ clear all, close all
 addpath('helper-functions')
 
 %% load in images and mturk masks
-masks_directory = 'Training/Trial4/masks/'; % enter with / at end
+masks_directory = 'Training/Trial5/masks/'; % enter with / at end
 files_to_process = get_filenames(masks_directory);
 
 for ii = 1:numel(files_to_process)
@@ -20,7 +20,7 @@ for ii = 1 : numel(data)
     elseif keystroke == 0
         data(ii).approval = 'rejected';
     else
-        error('Expecting keystroke to be 0 or 1. Rejecting image.');
+        fprintf('Expecting keystroke to be 0 or 1. Rejecting image.');
         data(ii).approval = 'rejected';
     end
      
