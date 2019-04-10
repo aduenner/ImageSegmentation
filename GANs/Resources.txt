@@ -1,0 +1,14 @@
+# GANs Few Shot Image Generation Resources
+# Updated April 10, 2019
+
+Original GANs Paper:
+https://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf
+
+Tutorials on using GANs/Keras/TF to perform few shot image generation:
+https://towardsdatascience.com/vaes-generating-images-with-tensorflow-61de08e82f1f
+
+https://www.oreilly.com/ideas/using-tensorflow-to-generate-images-with-pixelrnns
+
+https://medium.com/@ageitgey/abusing-generative-adversarial-networks-to-make-8-bit-pixel-art-e45d9b96cee7
+
+https://paperswithcode.com/task/image-generation
