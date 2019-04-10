@@ -77,7 +77,7 @@ class Turk(object):
             hits = query['HITs']
             these_hit_ids = [h['HITId'] for h in hits]
             if these_hit_ids:
-                hit_Ids.append(these_hit_ids)
+                hit_Ids = hit_Ids + these_hit_ids
         self.HITs = hit_Ids
         print('Number of HITs: '+str(len(self.HITs)))
 
