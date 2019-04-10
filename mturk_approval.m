@@ -2,7 +2,7 @@ clear all, close all
 addpath('helper-functions')
 
 %% load in images and mturk masks
-masks_directory = 'Training/Trial5/masks/'; % enter with / at end
+masks_directory = 'Training/Trial7/masks/'; % enter with / at end
 files_to_process = get_filenames(masks_directory);
 
 %% load in files of peaks that were already processed
