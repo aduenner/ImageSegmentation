@@ -1,6 +1,7 @@
 #No folders to be kept in data
 !Data/
 Data/*
+Training/Approved_Raw_Images/*
 
 # PYTHON STUFF BELOW
 # Byte-compiled / optimized / DLL files
