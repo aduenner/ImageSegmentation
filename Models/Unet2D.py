@@ -126,6 +126,7 @@ def definemodel(model_params):
     image_channels = model_params['input_channels']
     model_optimizer = model_params['model_optimizer']
     loss_function = model_params['loss_function']
+    output_channels = model_params['categories']
 
     '''Input  Layer'''
     inputs = Input((image_height, image_width, image_channels))
@@ -184,7 +185,7 @@ def definemodel(model_params):
     filter
     '''
     outputs = Conv2D(
-      1, (1, 1), activation=output_activation,
+      output_channels, (1, 1), activation=output_activation,
       name="output_convolution")(next_sequence_layer)
 
     model = Model(inputs=[inputs], outputs=[outputs])
