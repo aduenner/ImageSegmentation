@@ -1,12 +1,13 @@
-
-
+import keras.backend as K
+from keras.layers import core
 from keras.models import Model, Input
 from keras.layers.merge import concatenate
 from keras.layers.core import Dropout
 from keras.layers.convolutional import Conv2D, Conv2DTranspose
 from keras.layers.pooling import MaxPooling2D
 from keras.callbacks import EarlyStopping, ModelCheckpoint
-
+from keras.layers import BatchNormalization
+from keras.optimizers import Adam
 
 def initialize_inputs():
     model_inputs = {
@@ -50,7 +51,10 @@ def unet_conv_layer(convolution_dict, filtersize, inputlayer, dropoutweight, nam
     convolution_dict["filters"] = filtersize
     convolution_dict["name"] = name+"conv_a"
     c = Conv2D(**convolution_dict)(inputlayer)
-    c = Dropout(dropoutweight, name=name+"Drop")(c)
+    if dropoutweight==0:
+        c = BatchNormalization(name=name+"Batch_Norm")(c)
+    else:
+        c =  Dropout(dropoutweight, name=name+"Drop")(c)
     convolution_dict["name"] = name+"conv_b"
     c = Conv2D(**convolution_dict)(c)
     return c
@@ -184,14 +188,21 @@ def definemodel(model_params):
     Generate output layer which is a final convolution with size(1,1) and 1
     filter
     '''
-    outputs = Conv2D(
-      output_channels, (1, 1), activation=output_activation,
-      name="output_convolution")(next_sequence_layer)
+    output_conv = Conv2D(
+        output_channels, (1, 1),
+        activation=convolution_dict['activation'],
+        name="output_convolution")(next_sequence_layer)
+    
+    output_conv = core.Reshape((output_channels,image_height*image_width))(output_conv)
+    output_conv = core.Permute((2,1))(output_conv)
 
-    model = Model(inputs=[inputs], outputs=[outputs])
 
+    final_layer = core.Activation(output_activation)(output_conv)
+    
+    model = Model(inputs=[inputs], outputs=[final_layer])
     model.compile(
-      optimizer=model_optimizer, loss=loss_function)
+      optimizer=Adam(lr=model_params['learning_rate']),
+        loss=loss_function, metrics=['categorical_accuracy'])
 
     return model
 
@@ -205,13 +216,17 @@ def trainmodel(x_train, y_train, model, model_params):
     epochs = model_params['epochs']
     filename = model_params['filename']
     stop_after = model_params['stop_after']
+    
 
     earlystopper = EarlyStopping(patience=stop_after, verbose=0)
     checkpointer = ModelCheckpoint(filename, verbose=1, save_best_only=True)
-
+    if model_params['tb_callback']:
+        callback_list = [model_params['tb_callback'],earlystopper,checkpointer]
+    else:
+        callback_list = [earlystopper, checkpointer]
     results = model.fit(
       x_train, y_train, validation_split=validation_split,
-      batch_size=batch_size, epochs=epochs, callbacks=[earlystopper, checkpointer])
+      batch_size=batch_size, epochs=epochs, callbacks=callback_list)
 
     return model, results
 
