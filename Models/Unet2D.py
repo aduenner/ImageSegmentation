@@ -15,7 +15,7 @@ def initialize_inputs():
       "starting_filter_count": 16,
       "convolution_dict": {
          "kernel_initializer": "he_normal",
-         "activation": "relu",
+         "alpha": 0.3,
          "kernel_size": (3, 3),
          "padding": "same",
         },
@@ -38,6 +38,11 @@ def initialize_inputs():
     return model_inputs
 
 
+def leakyConv2D(convolution_dict,input_layer):
+    c = Conv2D(**convolution_dict)(input_layer)
+    c = keras.layers.LeakyReLU(alpha=convolution_dict["alpha'])(c)
+return c
+
 def unet_conv_layer(convolution_dict, filtersize, inputlayer, dropoutweight, name):
     """ Add a convolutional layer to the Unet Structure
     Parameters
@@ -50,13 +55,15 @@ def unet_conv_layer(convolution_dict, filtersize, inputlayer, dropoutweight, nam
     """
     convolution_dict["filters"] = filtersize
     convolution_dict["name"] = name+"conv_a"
-    c = Conv2D(**convolution_dict)(inputlayer)
+    #c = Conv2D(**convolution_dict)(inputlayer)
+    c = leakyConv2D(convolution_dict,inputlayer)
     if dropoutweight==0:
         c = BatchNormalization(name=name+"Batch_Norm")(c)
     else:
         c =  Dropout(dropoutweight, name=name+"Drop")(c)
     convolution_dict["name"] = name+"conv_b"
-    c = Conv2D(**convolution_dict)(c)
+    c = leakyConv2D(convolution_dict,input_layer)
+    #c = Conv2D(**convolution_dict)(c)
     return c
 
 
