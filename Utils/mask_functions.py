@@ -1,7 +1,6 @@
 import numpy as np
 from skimage.io import imread, imsave
 
-# Colors for original image
 def original_color_dict():
     
     Color_Dict = {
